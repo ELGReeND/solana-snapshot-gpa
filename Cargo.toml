@@ -44,3 +44,10 @@ solana-geyser-plugin-interface = { version = "1.11.3" }
 solana-program = { version = "1.11.3" }
 spl-token = { version = "3.3.0" }
 json5 = { version = "0.4.1" }
+
+[patch.crates-io]
+wasm-bindgen = { git = "https://github.com/rustwasm/wasm-bindgen", tag = "0.2.106", package = "wasm-bindgen" }
+wasm-bindgen-backend = { git = "https://github.com/rustwasm/wasm-bindgen", tag = "0.2.106", package = "wasm-bindgen-backend" }
+wasm-bindgen-macro = { git = "https://github.com/rustwasm/wasm-bindgen", tag = "0.2.106", package = "wasm-bindgen-macro" }
+wasm-bindgen-macro-support = { git = "https://github.com/rustwasm/wasm-bindgen", tag = "0.2.106", package = "wasm-bindgen-macro-support" }
+wasm-bindgen-shared = { git = "https://github.com/rustwasm/wasm-bindgen", tag = "0.2.106", package = "wasm-bindgen-shared" }
