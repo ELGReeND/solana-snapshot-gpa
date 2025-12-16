@@ -48,6 +48,19 @@ solana-snapshot-gpa [ОПЦИИ] <SOURCE>
 
 ### Примеры
 
+```bash
+SNAP="/root/solana/ledger/snapshot-387106253-31BdKLz9yx53K2qp4FgCH8iHyKuHNtjn2eJXMjQ56ZhH.tar.zst"
+PUBS="/root/m/adr_files/pubkeys.txt"
+GPA="./target/release/solana-snapshot-gpa"
+
+$GPA --noheader \
+  --pubkeyfile="$PUBS" \
+  --owner="TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA,size:165,memcmpfile:$PUBS@32" \
+  --owner="TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb,memcmpfile:$PUBS@32" \
+  "$SNAP" \
+  > matched.csv
+```
+
 Извлечь все аккаунты из локального снепшота:
 ```bash
 solana-snapshot-gpa snapshot-139240745-XXXX.tar.zst > all.csv
