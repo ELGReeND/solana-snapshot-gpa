@@ -27,6 +27,16 @@ cargo +1.85.1 build --release
 
 Готовый бинарник будет в `target/release/solana-snapshot-gpa`.
 
+### Обновление
+```bash
+cd solana-snapshot-gpa
+git stash -u
+git remote set-url origin https://github.com/ELGReeND/solana-snapshot-gpa
+git pull --rebase
+git stash pop
+cargo +1.85.1 build --release
+```
+
 ## Использование CLI
 
 ```
