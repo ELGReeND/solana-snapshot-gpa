@@ -63,18 +63,23 @@ solana-snapshot-gpa --owner=TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA,size:165
 # size = 44
 # u16(little endian) stored from the 40th byte is 128
 solana-snapshot-gpa --owner=whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc,size:44,memcmp:0x8000@40 snapshot.tar.zst > result.csv
+
+# Extract accounts where the compared bytes are any pubkey from a file (one pubkey per line)
+# owner program = TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+# compare 32 bytes starting from offset 32 against every entry in pubkeys.txt
+solana-snapshot-gpa --owner=TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA,memcmpfile:pubkeys.txt@32 snapshot.tar.zst > result.csv
 ```
 
 ### Output (CSV)
-* CSV with 7 columns is output.
+* CSV with 9 columns is output.
 * The account data is encoded in base64.
 * The output of the headers can be suppressed using --noheader option.
 * Because of the internal format of the output, called AppendVec, multiple versions of the account with different write_version columns are output. The most recent write_version is appropriate.
 
 ```
-pubkey,owner,data_len,lamports,write_version,data
-HT55NVGVTjWmWLjV7BrSMPVZ7ppU8T2xE5nCAZ6YaGad,whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc,44,1197120,492556471222,OEufTI5EvmkT5EH4ORPKaLBjT7Al/eqohzfoQRDRJV41ezN33e4czUAAuAs=
-4kuxsCskbbAvoME1JEdNXJJFWRWP2af2kotyQpmwsVcU,whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc,44,1197120,490748093121,OEufTI5EvmkF3IgGzHvjy10P4GItvoRPV06kXHzKT391zj26u8lAs0AArA0=
+pubkey,owner,data_len,lamports,slot,id,offset,write_version,data
+HT55NVGVTjWmWLjV7BrSMPVZ7ppU8T2xE5nCAZ6YaGad,whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc,44,1197120,387081222,0,0,492556471222,OEufTI5EvmkT5EH4ORPKaLBjT7Al/eqohzfoQRDRJV41ezN33e4czUAAuAs=
+4kuxsCskbbAvoME1JEdNXJJFWRWP2af2kotyQpmwsVcU,whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc,44,1197120,387081222,0,0,490748093121,OEufTI5EvmkF3IgGzHvjy10P4GItvoRPV06kXHzKT391zj26u8lAs0AArA0=
 ```
 
 ### Suppliment
@@ -92,7 +97,7 @@ solana-snapshot-gpa
  snapshot.tar.zst > result.csv
 
 # pick up latest write_version only
-tail -n +2 result.csv | sort -t, -k5,5nr | awk -F, '!dup[$1]++' > result.latest.csv
+tail -n +2 result.csv | sort -t, -k8,8nr | awk -F, '!dup[$1]++' > result.latest.csv
 ```
 
 #### How to create JSON to load solana-test-validator
@@ -108,11 +113,11 @@ solana-snapshot-gpa
  snapshot.tar.zst > result.csv
 
 # pick up latest write_version only
-tail -n +2 result.csv | sort -t, -k5,5nr | awk -F, '!dup[$1]++' > result.latest.csv
+tail -n +2 result.csv | sort -t, -k8,8nr | awk -F, '!dup[$1]++' > result.latest.csv
 
 # conver to JSON (directory: accounts)
 mkdir accounts
-cat result.latest.csv | awk -F, -v out="accounts" '{ filename=out"/"$1".json"; print "{\"pubkey\":\"" $1 "\",\"account\":{\"lamports\":" $4 ",\"data\":[\"" $6 "\",\"base64\"],\"owner\":\"" $2 "\",\"executable\":false,\"rentEpoch\":0}}" > filename; close(filename) }'
+cat result.latest.csv | awk -F, -v out="accounts" '{ filename=out"/"$1".json"; print "{\"pubkey\":\"" $1 "\",\"account\":{\"lamports\":" $4 ",\"data\":[\"" $9 "\",\"base64\"],\"owner\":\"" $2 "\",\"executable\":false,\"rentEpoch\":0}}" > filename; close(filename) }'
 
 # startup solana-test-validator with extracted accounts
 solana-test-validator --account-dir accounts --reset 
