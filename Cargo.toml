@@ -44,3 +44,10 @@ solana-geyser-plugin-interface = { version = "1.11.3" }
 solana-program = { version = "1.11.3" }
 spl-token = { version = "3.3.0" }
 json5 = { version = "0.4.1" }
+
+[patch.crates-io]
+wasm-bindgen = "0.2.88"
+wasm-bindgen-backend = "0.2.88"
+wasm-bindgen-macro = "0.2.88"
+wasm-bindgen-macro-support = "0.2.88"
+wasm-bindgen-shared = "0.2.88"
