@@ -22,7 +22,7 @@ Key capabilities:
 ```bash
 git clone https://github.com/ELGReeND/solana-snapshot-gpa
 cd solana-snapshot-gpa
-cargo build --release
+cargo +1.85.1 build --release
 ```
 
 The compiled binary is available at `target/release/solana-snapshot-gpa`.
