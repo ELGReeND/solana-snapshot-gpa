@@ -46,8 +46,8 @@ spl-token = { version = "3.3.0" }
 json5 = { version = "0.4.1" }
 
 [patch.crates-io]
-wasm-bindgen = { version = "=0.2.88" }
-wasm-bindgen-backend = { version = "=0.2.88" }
-wasm-bindgen-macro = { version = "=0.2.88" }
-wasm-bindgen-macro-support = { version = "=0.2.88" }
-wasm-bindgen-shared = { version = "=0.2.88" }
+wasm-bindgen = { version = "=0.2.106" }
+wasm-bindgen-backend = { version = "=0.2.106" }
+wasm-bindgen-macro = { version = "=0.2.106" }
+wasm-bindgen-macro-support = { version = "=0.2.106" }
+wasm-bindgen-shared = { version = "=0.2.106" }
